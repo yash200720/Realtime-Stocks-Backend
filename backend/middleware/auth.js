@@ -1,23 +1,26 @@
-const jwt = require("jsonwebtoken");
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 
-const config = process.env;
+dotenv.config();
+const jwtSecret = process.env.JWT_SECRET;
 
-const verifyToken = (req, res, next) => {
-  let token = req.body.token || req.query.token || req.headers["authorization"];
-
-  if (!token) {
-    return res.status(403).send("A token is required for authentication");
-  }
+const auth = async (req, res, next) => {
   try {
-    token = token.replace(/^Bearer\s+/, "");
-    const decoded = jwt.verify(token, config.TOKEN_KEY);
-    req.user = decoded;
-     
-  } catch (err) {
-    return res.status(401).send("Invalid Token");
-  }
+    const token = req.headers.authorization?.split(" ")[1];
+    const isCustomAuth = token.length < 500;
+    let contentDecoded;
 
-  return next();
+    if (token && isCustomAuth) {      
+      contentDecoded = jwt.verify(token, jwtSecret);
+      req.userId = contentDecoded?.id;
+    } else {
+      contentDecoded = jwt.decode(token);
+      req.userId = contentDecoded?.sub;
+    }    
+    next();
+  } catch (error) {
+    res.status(403).json({ message: "Not authenticated!" });
+  }
 };
 
-module.exports = verifyToken;
+export default auth;

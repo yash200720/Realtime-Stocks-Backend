@@ -1,24 +1,25 @@
 {
-  "name": "backend",
+  "name": "mock-stocks-api",
+  "type": "module",
   "version": "1.0.0",
-  "description": "",
+  "description": "Socket IO Backend for Stocks",
   "main": "index.js",
   "scripts": {
-    "start":"nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "JackyTea",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
     "cors": "^2.8.5",
-    "dotenv": "^16.1.3",
-    "express": "^4.18.2",
-    "express-joi-validation": "^5.0.1",
-    "joi": "^17.9.2",
-    "jsonwebtoken": "^9.0.0",
-    "mongoose": "^7.2.2",
-    "node": "^20.2.0",
-    "nodemon": "^2.0.22"
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "http": "*",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.13",
+    "path": "^0.12.7",
+    "socket.io": "^4.1.2",
+    "url": "^0.11.0"
   }
 }
